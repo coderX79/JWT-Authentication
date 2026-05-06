@@ -1,0 +1,43 @@
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const dotenv = require('dotenv')
+
+const User = require('./moderls/User')
+
+dotenv.config()
+
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+
+mongoose.connect(process.env.MONGO_URI)
+.then(()=> console.log("MongoDB connected successfully))
+.catch((err) = console.error(`Error connecting to mongoDB ${err}`))
+
+
+//impoting routes
+const authRoutes = require('./routes/authRoutes')
+
+//use routes
+app.use('/api/auth', authRoutes)
+
+const testRoutes = require('./routes/testRoutes')
+
+app.use('/api/test', testRoutes)
+
+app.listen(PORT, ()> {
+    console.log(`Server is running on port ${PORT}`)
+})
+
+
+
+//./->routes->authRoutes
+const express = require('experss')
+const router = express.router()
+const {registerUser, loginUser} = require('../controllers/authController')
+
+router.post('/register', registerUser)
+
+router.post()
